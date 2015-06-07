@@ -1,0 +1,43 @@
+ui_print("==============================");
+ui_print("=    Toiiki Kernel N910F     =");
+ui_print("=   htttp://foro.toiiki.es   =");
+ui_print("=  Desarrollador: BadWolf    =");
+ui_print("=      Toiiki Dev Team       =");
+ui_print("==============================");
+
+
+ui_print("Montando System...");
+run_program("/sbin/busybox", "mount", "/system");
+run_program("/sbin/busybox", "mount", "/data");
+run_program("/sbin/busybox", "mount", "/cache");
+ui_print("Instalando KERNEL...");
+package_extract_dir("tmp", "/tmp");
+set_perm(0, 0, 0755, "/tmp/installer.sh");
+assert(run_program("/tmp/installer.sh") == 0);
+ui_print("Borrando Scripts de otros Kernels");
+delete_recursive("/system/app/SecurityLogAgent");
+delete("/system/etc/init.d/01ENABLE_USB_KEYBOARD");
+delete("/system/etc/init.d/02DISABLE_USB_KEYBOARD");
+delete("/system/etc/init.d/11ENTROPY");
+delete("/system/etc/init.d/01freq");
+delete("/data/dalvik-cache/data@app@com.af.synapse-1.apk@classes.dex");
+delete("/data/dalvik-cache/data@app@com.af.synapse-2.apk@classes.dex");
+delete("/data/dalvik-cache/data@app@com.af.synapse-3.apk@classes.dex");
+delete_recursive("/data/data/com.af.synapse");
+delete_recursive("/res");
+delete_recursive("/data/.ToiikiKernel");
+delete_recursive("/cache");
+package_extract_dir("system", "/system");
+package_extract_dir("data", "/data");
+set_perm_recursive(0, 2000, 0777, 0777, "/system/etc/init.d");
+ui_print("==== Finalizando instalacion ====");
+package_extract_file("boot.img", "/dev/block/platform/msm_sdcc.1/by-name/boot");
+delete("/tmp/installer.sh");
+ui_print("Desmontando particiones...");
+# Unmounting filesystems...
+run_program("/sbin/busybox", "umount", "/system");
+run_program("/sbin/busybox", "umount", "/data");
+run_program("/sbin/busybox", "umount", "/cache");
+ui_print("===================================");
+ui_print("==== Reinicia tu dispositivo  ==== *");
+ui_print("===================================");
