@@ -1,0 +1,70 @@
+#!/sbin/busybox sh
+
+cat << CTAG
+{
+    name:BUILD.PROP,
+    elements:[
+	{ SPane:{
+		title:"Ajustes build.prop",
+		description:" Si en el valor de cualquier ajuste aparece -1 significa que no ha sido encontrado en el build.prop. Todos los ajustes seran escritos en setprop.",
+	}},
+	{ SDescription:{
+		description:""
+	}},
+	{ SSeekBar:{
+		title:"Intervalo escaneo WiFi",
+		description:" Ajusta el intervalo de escaneo de canales del WiFi. Ajustando un valor alto ahorrara bateria. Recomendado 180",
+		unit:" seg",
+		min:-1,
+		max:300,
+		step:1,
+		default:180,
+		action:"buildprop wifi.supplicant_scan_interval",
+	}},
+	{ SDescription:{
+		description:""
+	}},
+	{ SSeekBar:{
+		title:"VM Heapsize",
+		description:" Ajusta el maximo de memoria en primera instancia para Dalvik Virtual Machine (aplicaciones). Por defecto es 512",
+		unit:" MB",
+		min:-1,
+		max:1024,
+		step:1,
+		default:512,
+		action:"buildprop dalvik.vm.heapsize",
+	}},
+	{ SDescription:{
+		description:""
+	}},
+	{ SCheckBox:{
+		label:"Permitir purgar bitmaps",
+		description:" Permite liberar espacio en RAM purgando mapas de dibujado que no se usan en el momento.",
+		default:1,
+		action:"buildprop persist.sys.purgeable_assets",
+	}},
+	{ SDescription:{
+		description:""
+	}},
+	{ SPane:{
+		title:"ADB sobre WIFI"
+	}},
+	{ SDescription:{
+		description:""
+	}},
+	{ SGeneric:{
+		title:"Device HostName",
+		default:`getprop net.hostname 2> /dev/null`,
+		action:"buildprop net.hostname",
+	}},
+	{ SDescription:{
+		description:""
+	}},
+	{ SGeneric:{
+		title:"Puerto Wireless",
+		default:`getprop service.adb.tcp.port`,
+		action:"buildprop service.adb.tcp.port",
+	}},
+    ]
+}
+CTAG

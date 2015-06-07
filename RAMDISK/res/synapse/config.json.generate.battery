@@ -1,0 +1,64 @@
+#!/sbin/busybox sh
+
+cat << CTAG
+{
+    name:BATERIA,
+    elements:[
+	{ SPane:{
+		title:"Informacion"
+	}},
+        { SLiveLabel:{
+                  action:"charge-source"
+        }},
+	{ SLiveLabel:{
+		refresh:1000,
+		action:"live batttype"
+	}},
+	{ SLiveLabel:{
+		refresh:1000,
+		action:"live battcurrav"
+	}},
+	{ SLiveLabel:{
+		refresh:1000,
+		action:"live battcurrnow"
+	}},
+	{ SLiveLabel:{
+		refresh:9000,
+		action:"live battvoltnow"
+	}},
+	{ SLiveLabel:{
+		refresh:1000,
+		action:"live batttemp"
+	}},
+	{ SLiveLabel:{
+		refresh:1000,
+		action:"live battcapa"
+	}},
+	{ SLiveLabel:{
+		refresh:1000,
+		action:"live battstatus"
+	}},
+	{ SLiveLabel:{
+		refresh:9000,
+		action:"live batthealth"
+	}},
+	{ SDescription:{
+		description:" "
+	}},
+	{ SPane:{
+		title:"Calibracion de bateria",
+		description:" Si estas teniendo medidas incorrectas de bateria, esto reseteara el % para que las medidas sean correctas. Tras resetearlo espera varias horas. Tras una carga completa, se mostraran los valores correctos, hasta entonces podran variar bastante."
+	}},
+	{ SDescription:{
+		description:" "
+	}},
+	{ SButton:{
+		label:"Reiniciar Chip Fuel-Gauge ahora",
+		action:"fuel-gauge fuel-gauge"
+	}},
+	{ SDescription:{
+		description:" "
+	}},
+    ]
+}
+CTAG

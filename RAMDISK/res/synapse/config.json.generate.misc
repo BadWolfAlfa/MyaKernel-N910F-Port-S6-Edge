@@ -1,0 +1,72 @@
+#!/sbin/busybox sh
+
+cat << CTAG
+{
+    name:MISC,
+    elements:[
+    	{ SPane:{
+		title:"TCP Congestion Control",
+		description:" Select your preferred WIFI TCP algorithm. Regulates upload and download affecting throughput in various ways. Default is Westwood+."
+    	}},
+	{ SDescription:{
+		description:""
+	}},
+	{ SOptionList:{
+		default:`cat proc/sys/net/ipv4/tcp_congestion_control`,
+		action:"generic proc/sys/net/ipv4/tcp_congestion_control",
+		values:[`while read values; do busybox printf "%s, \n" $values; done < proc/sys/net/ipv4/tcp_available_congestion_control`]
+	}},
+	{ SDescription:{
+		description:""
+	}},
+	{ SPane:{
+		title:"Sweep2Sleep",
+		description:" Allows you to turn the screen off by swiping UNDER the navigation bar left > right or right > left.",
+	}},
+	{ SDescription:{
+		description:" "
+	}},
+	{ SCheckBox:{
+		label:"Enable or Disable Sweep2Sleep",
+		default:`cat /sys/sweep2sleep/sweep2sleep`,
+		action:"generic /sys/sweep2sleep/sweep2sleep"
+	}},
+	{ SDescription:{
+		description:" "
+	}},
+	{ SPane:{
+		title:"Vibration Intensity Control",
+		description:" Allows you to control the vibration intensity.",
+	}},
+	{ SDescription:{
+		description:" "
+	}},
+	{ SSeekBar:{
+		title:"Vibration Strength",
+		description:"Adjust the vibration intensity",
+		min:0,
+		max:100,
+		step:1,
+		default:`cat /sys/class/timed_output/vibrator/pwm_value`,
+		action:"generic /sys/class/timed_output/vibrator/pwm_value"
+	}},
+	{ SPane:{
+		title:"Cypress-Touchkey",
+		description:"If you want to use soft keys you can disable the cypress-touchkey. Otherwise leave at default"
+        }},
+        { SOptionList:{
+       		title:"Enable or disable Cypress-Touchkey.",
+		description:"Default is Enabled",
+		default:`cat /sys/class/sec/sec_touchkey/keypad_enable`,
+		action:"generic /sys/class/sec/sec_touchkey/keypad_enable",
+		values:{
+			"0":"Disabled",
+			"1":"Enabled",
+			}
+	}},
+	{ SDescription:{
+		description:" "
+	}},
+    ]
+}
+CTAG

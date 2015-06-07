@@ -1,0 +1,67 @@
+#!/sbin/busybox sh
+
+cat << CTAG
+{
+    name:CPU,
+    elements:[
+        { STitleBar:{
+                title:"Frecuencia Escala CPU"
+        }},
+	{ SDescription:{
+		description:" Nota: los ajustes se cambiaran segun Samsung DVFS. Para mejorar el control se aconseja desactiva DVFS usando Wanam's (usa xPosed) <a href='http://forum.xda-developers.com/xposed/modules/app-disable-samsung-touchwiz-dvfs-t2676916'>DVFS Disabler</a> "
+	}},
+	{ SDescription:{
+		description:""
+	}},	{ SDescription:{
+		description:""
+	}},
+	{ SSeekBar:{
+       		title:"Maxima Frecuencia",
+		description:" Por defecto es: 2649.6 MHz.",
+		default:`cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq`,
+		action:"generic /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq",
+		values:{
+`
+                        while read FREQ TIME; do
+                                        LABEL=$(expr $FREQ / 1000)
+                                echo "$FREQ:\"${LABEL} MHz\", "
+			done < /sys/devices/system/cpu/cpu0/cpufreq/stats/time_in_state
+`
+		}
+	}},
+	{ SDescription:{
+		description:""
+	}},
+	{ SSeekBar:{
+       		title:"Minima Frecuencia",
+		description:" Por defecto es: 300MHz.",
+		default:`cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq`,
+		action:"generic /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq",
+		values:{
+`
+                        while read FREQ TIME; do
+                                        LABEL=$(expr $FREQ / 1000)
+                                echo "$FREQ:\"${LABEL} MHz\", "
+			done < /sys/devices/system/cpu/cpu0/cpufreq/stats/time_in_state
+`
+		}
+	}},
+	{ SDescription:{
+		description:""
+	}},
+	{ SPane:{
+		title:"Frecuencias sin usar:"
+	}},
+	{ SDescription:{
+		description:""
+	}},
+	{ SLiveLabel:{
+		refresh:2500,
+		action:"live2 LiveUnUsed_LITTLE"
+	}},
+	{ SDescription:{
+		description:" "
+	}},
+    ]
+}
+CTAG

@@ -1,0 +1,54 @@
+#!/sbin/busybox sh
+
+cat << CTAG
+{
+    name:GPU,
+    elements:[
+        { STitleBar:{
+                title:"GPU Frequency Scaling"
+        }},
+	{ SDescription:{
+		description:" Note: Settings may automatically change due to Samsung DVFS. For better control, suggest to disable DVFS using Wanam's DVFS Disabler app <a href='http://forum.xda-developers.com/xposed/modules/app-disable-samsung-touchwiz-dvfs-t2676916'>HERE</a>"
+	}},
+	{ SDescription:{
+		description:""
+	}},	{ SDescription:{
+		description:""
+	}},
+	{ SSeekBar:{
+       		title:"GPU MAX frequency",
+		description:" Set the maximum frequency the GPU scales up to. Default is 700 MHz.",
+		default:`cat /sys/devices/platform/gpusysfs/gpu_max_clock`,
+		action:"generic /sys/devices/platform/gpusysfs/gpu_max_clock",
+		values:{
+`
+                        while read FREQ TIME; do
+                                        LABEL=$(expr $FREQ / 1000)
+                                echo "$FREQ:\"${LABEL} MHz\", "
+			done < /sys/devices/platform/gpusysfs/gpu_freq_table
+`
+		}
+	}},
+	{ SDescription:{
+		description:""
+	}},
+	{ SSeekBar:{
+       		title:"GPU MIN frequency",
+		description:" Set the minimum frequency the GPU scales down to. Default is 160 MHz.",
+		default:`cat /sys/devices/platform/gpusysfs/gpu_min_clock`,
+		action:"generic /sys/devices/platform/gpusysfs/gpu_min_clock",
+		values:{
+`
+                        while read FREQ TIME; do
+                                        LABEL=$(expr $FREQ / 1000)
+                                echo "$FREQ:\"${LABEL} MHz\", "
+			done < /sys/devices/platform/gpusysfs/gpu_freq_table
+`
+		}
+	}},
+	{ SDescription:{
+		description:""
+	}},
+    ]
+}
+CTAG

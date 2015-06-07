@@ -1,0 +1,89 @@
+#!/sbin/busybox sh
+
+cat << CTAG
+{
+    name:"INFO",
+    elements:[
+	{ SPane:{
+		title:"Codigo Fuente",
+		description:" Modificado y compilado desde Samsung OSRC: <a href='https://github.com/friedrich420/N4-AEL-Kernel-N910F_EUR-Source-/commits/master'>GitHub</a>."
+	}},
+	{ SDescription:{
+		description:"Traducido por BadWolf para MyaKernel, basado en AEL Kernel, con mejoras y Tweaks para MyaROM Port S6 Edge  --- Pronto mas novedades ---"
+	}},
+	{ SDescription:{
+		description:""
+	}},
+	{ SPane:{
+		title:"Kernel Version"
+	}},
+	{ SLiveLabel:{
+		refresh:10000,
+		action:"default version"
+	}},
+	{ SDescription:{
+		description:""
+	}},
+	{ SPane:{
+		title:"Build"
+	}},
+	{ SLiveLabel:{
+		refresh:10000,
+		action:"default build"
+	}},
+	{ SDescription:{
+		description:""
+	}},
+	{ SPane:{
+		title:"Android Version"
+	}},
+	{ SLiveLabel:{
+		refresh:10000,
+		action:"default android_version"
+	}},
+	{ SDescription:{
+		description:""
+	}},
+	{ SPane:{
+		title:"Fecha compilacion"
+	}},
+	{ SLiveLabel:{
+		refresh:10000,
+		action:"default date"
+	}},
+	{ SDescription:{
+		description:""
+	}},
+	{ SPane:{
+		title:"BandaBase"
+	}},
+	{ SLiveLabel:{
+		refresh:10000,
+		action:"default baseband"
+	}},
+	{ SDescription:{
+		description:""
+	}},
+	{ SPane:{
+		title:"Bootloader"
+	}},
+	{ SLiveLabel:{
+		refresh:10000,
+		action:"default bootloader"
+	}},
+	{ SDescription:{
+		description:""
+	}},
+	{ SPane:{
+		title:"Num. de Serie"
+	}},
+	{ SLiveLabel:{
+		refresh:10000,
+		action:"default serial"
+	}},
+	{ SDescription:{
+		description:" "
+	}},
+    ]
+}
+CTAG
